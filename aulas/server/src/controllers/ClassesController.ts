@@ -28,12 +28,12 @@ export default class ClassesController {
                     .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
                     .whereRaw('`class_schedule`.`week_day` = ??', [Number(filters.week_day)])
                     .whereRaw('`class_schedule`.`from` <= ??', [timeInMinutes])
-                    .whereRaw('`class_schedule`.`from` > ??', [timeInMinutes])
+                    .whereRaw('`class_schedule`.`to` > ??', [timeInMinutes])
             })
             .where('classes.subject', '=', filters.subject as string)
             .join('users', 'classes.user_id', '=', 'users.id')
             .select(['classes.*', 'users.*']);
-
+            
         return response.json(classes);
     }
 
